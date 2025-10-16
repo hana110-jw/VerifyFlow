@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - InvoiceVerify</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <svg class="logo-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"></path>
+                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                </svg>
+                <span class="brand-name">InvoiceVerify</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Search</a>
+                <a href="admin.html" class="nav-link active">Admin</a>
+                <button class="btn btn-outline" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content admin-page">
+        <div class="container">
+            <div class="admin-header">
+                <h1 class="page-title">Admin Dashboard</h1>
+                <button class="btn btn-primary" id="addInvoiceBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Invoice
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="invoices">Invoices</button>
+                <button class="tab-btn" data-tab="audit">Audit Logs</button>
+            </div>
+
+            <!-- Invoices Tab -->
+            <div class="tab-content active" id="invoicesTab">
+                <div class="table-container">
+                    <div id="invoicesLoading" class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading invoices...</p>
+                    </div>
+                    <div id="invoicesError" class="alert alert-error" style="display: none;"></div>
+                    <table class="data-table" id="invoicesTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Invoice Number</th>
+                                <th>Bank Name</th>
+                                <th>Account Number</th>
+                                <th>Verified By</th>
+                                <th>Verified At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoicesTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Audit Logs Tab -->
+            <div class="tab-content" id="auditTab">
+                <div class="table-container">
+                    <div id="auditLoading" class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading audit logs...</p>
+                    </div>
+                    <div id="auditError" class="alert alert-error" style="display: none;"></div>
+                    <table class="data-table" id="auditTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Invoice Number</th>
+                                <th>Action</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add Invoice</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <form id="invoiceForm" class="modal-form">
+                <input type="hidden" id="invoiceId">
+                <div class="form-group">
+                    <label for="modalInvoiceNumber" class="form-label">Invoice Number</label>
+                    <input 
+                        type="text" 
+                        id="modalInvoiceNumber" 
+                        class="form-input" 
+                        placeholder="e.g., INV-2025-001"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="modalBankName" class="form-label">Bank Name</label>
+                    <input 
+                        type="text" 
+                        id="modalBankName" 
+                        class="form-input" 
+                        placeholder="e.g., Bank of America"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="modalAccountNumber" class="form-label">Account Number</label>
+                    <input 
+                        type="text" 
+                        id="modalAccountNumber" 
+                        class="form-input" 
+                        placeholder="e.g., 1234567890"
+                        required
+                    >
+                </div>
+                <div id="modalError" class="alert alert-error" style="display: none;"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveBtn">
+                        <span id="saveBtnText">Save</span>
+                        <span id="saveBtnSpinner" class="btn-spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
